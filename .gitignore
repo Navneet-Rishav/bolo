@@ -25,3 +25,6 @@ telegram-token.txt
 
 .vercel
 .env*.local
+
+.vercel
+.env*.local
