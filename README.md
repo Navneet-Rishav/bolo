@@ -4,7 +4,7 @@
 
 **A Hinglish voice receptionist for clinics.** Patients talk to a web widget in Hindi, English or Hinglish to **book, reschedule or cancel** appointments. Clinic staff see a calendar of bookings and every call's transcript (phone numbers masked) with per-turn latency.
 
-> **Live demo:** _not deployed yet._ Run it locally in a few commands (below). "Try the demo" creates your own fictional clinic with a staff dashboard and a patient-widget link.
+> **Live demo:** https://bolo-liard.vercel.app · API: https://bolo-api.onrender.com/healthz (free tier: the first request after 15 idle minutes can take up to a minute). "Try the demo" creates your own fictional clinic with a staff dashboard and a patient-widget link.
 > **The demo runs in demo mode:** a rule-based stand-in replaces the language model and voice is off (it needs the Sarvam API). The conversation state machine, slot rules, double-booking protection, masking and dashboard are the real code.
 
 | Patient widget (phone) | Call log with masked transcript and latency |
@@ -67,6 +67,8 @@ cd ../frontend && npm install && npm run dev   # http://localhost:5173 → Try t
 Tests: `cd backend && pytest` (starts a throwaway Postgres if `TEST_DATABASE_URL` is not set) and `cd frontend && npm test`.
 
 ## Known limitations
+
+- **Render free tier sleeps** after 15 idle minutes; the first request can take up to a minute.
 
 - **Web widget only:** real phone calls (telephony) are a future step.
 - **Turn-based, not streaming,** speech: each turn waits for full STT and TTS.
