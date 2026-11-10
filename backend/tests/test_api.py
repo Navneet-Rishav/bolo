@@ -182,3 +182,12 @@ def test_nothing_is_stored_unmasked(db) -> None:
     handle_turn(db, db.get(Call, call.id), clinic, "Mera naam Ravi hai, number ९८७६५१२३४५", now=NOW)
     texts = " ".join(t.text for t in db.scalars(select(Turn).where(Turn.call_id == call.id)))
     assert "9876512345" not in texts and "९८७६५१२३४५" not in texts and "<PHONE>" in texts
+
+
+def test_numbers_only_turn_keeps_the_conversation_language(db) -> None:
+    staff = create_demo_clinic(db, IST, now=NOW)
+    clinic = db.get(Clinic, staff.clinic_id)
+    call, *_ = start_call(db, clinic)
+    handle_turn(db, db.get(Call, call.id), clinic, "Mera naam Ravi hai", now=NOW)
+    r = handle_turn(db, db.get(Call, call.id), clinic, "98765 12345", now=NOW)
+    assert "chahenge" in r.reply  # still Hinglish, not switched to English by a bare number

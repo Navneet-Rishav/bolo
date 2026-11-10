@@ -103,7 +103,9 @@ def build_graph(deps: Deps):
                 data["date"] = None
         if data["time_pref"] and not re.fullmatch(r"morning|afternoon|evening|\d{2}:\d{2}", data["time_pref"]):
             data["time_pref"] = None
-        conv["lang"] = data["language"]
+        # A message with no words (just a phone number) says nothing about language: keep the previous one.
+        if re.search(r"[A-Za-zऀ-ॿ]", s["text"]):
+            conv["lang"] = data["language"]
         return {"nlu": data, "replies": []}
 
     def guard(s: TurnState) -> TurnState:
