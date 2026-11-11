@@ -46,3 +46,10 @@ Tests, CI and the public demo use a rule-based understanding provider (keywords 
 - SMS/WhatsApp confirmations and reminders.
 - Streaming speech for lower latency.
 - Staff creating or moving appointments from the dashboard (they can view and cancel).
+
+## 9. Secret scanning (gitleaks in CI)
+
+A separate workflow (`.github/workflows/gitleaks.yml`) scans the **full git history** on every push and pull request and fails if it finds a secret.
+- Runs the gitleaks binary directly (pinned v8.30.1, SHA-256 checked) rather than a marketplace action: no extra token or permissions, and it's easy to see exactly what runs.
+- `.gitleaks.toml` keeps all default rules and allow-lists only known placeholders (local docker/CI database credentials, the local docker JWT secret, test-only secrets), each matched exactly with a comment explaining why it is safe. A real token planted in any allow-listed file is still caught (checked by hand).
+- Alternative considered: GitHub's built-in secret scanning push protection. It is useful too, but it can't be run locally or shown in CI, and it doesn't cover generic patterns the same way.
