@@ -7,6 +7,24 @@
 > **Live demo:** https://bolo-liard.vercel.app · API: https://bolo-api.onrender.com/healthz (free tier: the first request after 15 idle minutes can take up to a minute). "Try the demo" creates your own fictional clinic with a staff dashboard and a patient-widget link.
 > **The demo runs in demo mode:** a rule-based stand-in replaces the language model and voice is off (it needs the Sarvam API). The conversation state machine, slot rules, double-booking protection, masking and dashboard are the real code.
 
+**Problem:** small clinics miss calls and double-book, and patients want to book in the language they actually speak.
+
+### At a glance
+
+- **Tests:** 57 automated tests: 54 backend tests (pytest, real Postgres), including **16 scripted conversations**, and 3 frontend tests. Run them with `cd backend && pytest` and `cd frontend && npm test`.
+- **Evals:** the 16 scripted conversations (English, Hinglish, Devanagari, typos, emergencies, handoffs) pass on the offline demo provider. They test the state machine and rules, not a model; **no real-model run yet.** See [Tests](#tests).
+
+### Key design decisions
+
+- **The model understands; code decides:** the LLM only extracts fields, while slot rules, clinic hours and the explicit "yes" before booking are code. [Why →](docs/DECISIONS.md#1-the-model-understands-code-decides)
+- **A LangGraph state machine** for the call flow: identify → intent → slot search → confirm → done or handoff. [Why →](docs/DECISIONS.md#2-langgraph-state-machine)
+- **No double booking, enforced by the database:** a partial unique index rejects a second booking of the same doctor and time, even under concurrent calls. [Why →](docs/DECISIONS.md#3-no-double-booking-enforced-by-the-database)
+- **Multi-tenant by clinic,** with one private demo clinic per visitor. [Why →](docs/DECISIONS.md#4-multi-tenant-by-clinic-one-demo-clinic-per-visitor)
+- **Privacy:** phone numbers are masked (including Devanagari digits) before transcripts are stored. [Why →](docs/DECISIONS.md#5-privacy)
+
+All decisions and alternatives: [docs/DECISIONS.md](docs/DECISIONS.md).
+
+
 | Patient widget (phone) | Call log with masked transcript and latency |
 |---|---|
 | ![Widget](docs/screenshots/widget-mobile.png) | ![Calls](docs/screenshots/calls-desktop.png) |
