@@ -23,6 +23,7 @@ from sqlalchemy.orm import Session
 from app.agent import nlu
 from app.agent.replies import fmt_day, fmt_options, fmt_when, say
 from app.ai.base import AiProvider, complete_json
+from app.domain import backstop
 from app.domain.phone import extract_mobile
 from app.domain.slots import SlotRules, available_slots, filter_by_preference, next_working_days
 from app.models import Appointment, AppointmentStatus, Clinic, Doctor
@@ -86,6 +87,19 @@ def build_graph(deps: Deps):
                 return d
         return None
 
+    def doctor_in_text(text: str) -> Doctor | None:
+        """Backstop when the model's doctor hint doesn't resolve: a surname or specialty said in so many words."""
+        t = text.lower()
+        hits = [
+            d
+            for d in doctors
+            if re.search(rf"\b{re.escape(d.name.split()[-1].lower())}\b", t)
+            or d.name_hi.split()[-1] in text
+            or d.specialty.lower() in t
+            or d.specialty_hi in text
+        ]
+        return hits[0] if len(hits) == 1 else None
+
     # ---- nodes ------------------------------------------------------------------------------------------
 
     def understand(s: TurnState) -> TurnState:
@@ -103,9 +117,14 @@ def build_graph(deps: Deps):
                 data["date"] = None
         if data["time_pref"] and not re.fullmatch(r"morning|afternoon|evening|\d{2}:\d{2}", data["time_pref"]):
             data["time_pref"] = None
+        # Code double-checks fields the model sometimes leaves empty (see app/domain/backstop.py).
+        if data["choice"] is None and conv["stage"] == "search" and conv.get("offered"):
+            data["choice"] = backstop.choice_from_text(s["text"], len(conv["offered"]))
+        if data["affirm"] is None and conv["stage"] == "confirm":
+            data["affirm"] = backstop.affirm_from_text(s["text"])
         # A message with no words (just a phone number) says nothing about language: keep the previous one.
         if re.search(r"[A-Za-zऀ-ॿ]", s["text"]):
-            conv["lang"] = data["language"]
+            conv["lang"] = backstop.language_from_text(s["text"], data["language"])
         return {"nlu": data, "replies": []}
 
     def guard(s: TurnState) -> TurnState:
@@ -216,10 +235,15 @@ def build_graph(deps: Deps):
         if u.get("doctor"):
             conv["doctor_hint"], made = u["doctor"], True
         if not conv.get("doctor_id"):
-            d = resolve_doctor(conv.get("doctor_hint"))
+            d = resolve_doctor(conv.get("doctor_hint")) or doctor_in_text(s["text"])
             if d:
                 conv["doctor_id"], made = d.id, True
-        progress(conv, made or not conv.get("offered"))
+        # Arriving in this step is not a failure; answering a question we asked here with nothing new is.
+        if made:
+            progress(conv, True)
+        elif conv.get("search_asked"):
+            progress(conv, False)
+        conv["search_asked"] = True
         if conv["failures"] >= MAX_FAILURES:
             return handoff(s, "not_understood", "handoff_confused")
         doctor = doctor_by_id(conv.get("doctor_id"))
@@ -295,7 +319,16 @@ def build_graph(deps: Deps):
             if conv["intent"] == "cancel":
                 conv["stage"] = "done"
                 return reply(s, say(lang, "not_changed")) | {"outcome": "ended"}
-            conv.update(stage="search", chosen=None, offered=[], offered_labels=[], date=None, time_pref=None, failures=0)
+            conv.update(
+                stage="search",
+                chosen=None,
+                offered=[],
+                offered_labels=[],
+                date=None,
+                time_pref=None,
+                failures=0,
+                search_asked=False,
+            )
             return {"next": "search"}
         return execute(s)
 
