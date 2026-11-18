@@ -53,3 +53,12 @@ A separate workflow (`.github/workflows/gitleaks.yml`) scans the **full git hist
 - Runs the gitleaks binary directly (pinned v8.30.1, SHA-256 checked) rather than a marketplace action: no extra token or permissions, and it's easy to see exactly what runs.
 - `.gitleaks.toml` keeps all default rules and allow-lists only known placeholders (local docker/CI database credentials, the local docker JWT secret, test-only secrets), each matched exactly with a comment explaining why it is safe. A real token planted in any allow-listed file is still caught (checked by hand).
 - Alternative considered: GitHub's built-in secret scanning push protection. It is useful too, but it can't be run locally or shown in CI, and it doesn't cover generic patterns the same way.
+
+## 10. What the real-model eval found (19 Nov 2026)
+
+Three runs of the 16 scripted conversations on Sarvam `sarvam-105b` before any fix, three after. Results: [`backend/evals/results/`](../backend/evals/results/2026-11-19-sarvam-105b.md).
+- **The model sometimes drops a field it clearly understood** (the doctor, "first" as option 1, "haan" as yes), and the same message passes on one run and fails on the next. Code now double-checks short, unambiguous messages after the model ([`app/domain/backstop.py`](../backend/app/domain/backstop.py)) and only fills fields the model left empty. This keeps the rule from §1: the model understands, code decides; code just doesn't trust an empty answer.
+- **A real state-machine bug:** in slot search every turn counted as progress until options were offered, so a caller who said "book" and then gave vague replies was never handed off. Now arriving in that step is not a failure, but an empty answer to a question asked there is. The demo provider never reached that state, so only the real model exposed it.
+- **Language:** romanized text the model labels Hindi is kept as Hinglish, so replies don't switch to Devanagari mid-call.
+- **Result:** scripts passed 8–9 → 11–14 of 16; bookings 3–4 → 5–8 of 10; handoffs 2 → 3 of 3; zero unconfirmed writes in all six runs. Still failing: an early guessed intent isn't overridden by a later "reschedule", "child doctor" isn't mapped to Pediatrician, and the model's date for a closed weekday isn't checked against the weekday the caller named.
+- The eval script refuses to run against a hosted database (each script creates a demo clinic) unless `--allow-remote-db` is passed, and `--json` writes every transcript.

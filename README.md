@@ -11,8 +11,8 @@
 
 ### At a glance
 
-- **Tests:** 58 automated tests: 54 backend tests (pytest, real Postgres), including **16 scripted conversations**, and 4 frontend tests. Run them with `cd backend && pytest` and `cd frontend && npm test`.
-- **Evals:** the 16 scripted conversations (English, Hinglish, Devanagari, typos, emergencies, handoffs) pass on the offline demo provider. They test the state machine and rules, not a model; **no real-model run yet.** See [Tests](#tests).
+- **Tests:** 82 automated tests: 78 backend tests (pytest, real Postgres), including the **16 scripted conversations**, and 4 frontend tests. Run them with `cd backend && pytest` and `cd frontend && npm test`.
+- **Evals (Sarvam `sarvam-105b`, 16 scripted conversations, 3 runs before and 3 after fixes, 19 Nov 2026):** after the fixes **11–14 of 16** passed (from 8–9), bookings **5–8 of 10** (from 3–4), handoffs **3/3**, and in every run **nothing was written without an explicit yes**. A small set; per-conversation results and transcripts: [2026-11-19-sarvam-105b.md](backend/evals/results/2026-11-19-sarvam-105b.md).
 
 ### Key design decisions
 
@@ -53,9 +53,10 @@ All decisions and alternatives: [docs/DECISIONS.md](docs/DECISIONS.md).
 
 ## Tests
 
-- **54 backend tests** (pytest, real Postgres): phone parsing and masking, slot generation (schedule, lead time, window, time zones, booked slots), **16 scripted conversations** (English, Hinglish, Devanagari, typos, spaced digits, reschedule, cancel, decline, invalid phone, closed Sunday, emergency, human request, confusion), the **double-booking race**, clinic isolation, rate and length limits, voice routes with a fake provider, and the Sarvam client against mocked HTTP.
+- **78 backend tests** (pytest, real Postgres): phone parsing and masking, slot generation (schedule, lead time, window, time zones, booked slots), **16 scripted conversations** (English, Hinglish, Devanagari, typos, spaced digits, reschedule, cancel, decline, invalid phone, closed Sunday, emergency, human request, confusion), the **double-booking race**, clinic isolation, rate and length limits, voice routes with a fake provider, and the Sarvam client against mocked HTTP.
 - **4 frontend tests** plus typecheck, lint and build; a Playwright end-to-end run (widget booking → calendar → transcript) produced the screenshots.
-- The scripted conversations pass with the offline demo provider, whose keyword rules were written alongside them, so **they test the state machine and rules, not a model**. `python -m evals.run` runs the same scripts against the real model (paid API calls; not run yet).
+- In CI the scripted conversations run on the offline demo provider, whose keyword rules were written alongside them, so there **they test the state machine and rules, not a model**.
+- `python -m evals.run` runs the same scripts on the real model. Results (Sarvam `sarvam-105b`, 3 runs before and 3 after the fixes it led to): [backend/evals/results/2026-11-19-sarvam-105b.md](backend/evals/results/2026-11-19-sarvam-105b.md). The first runs found that calls stalled when the model dropped a field it had understood (the doctor, "first", a plain "haan"), that vague replies never handed off once the caller had said "book", and that romanized Hinglish flipped replies into Devanagari. Each is fixed with a test that fails on the old code; three conversations still fail and are listed with their causes.
 
 ## Architecture
 

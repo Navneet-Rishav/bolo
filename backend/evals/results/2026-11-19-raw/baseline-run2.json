@@ -1,0 +1,936 @@
+{
+  "summary": {
+    "provider": "sarvam/sarvam-105b",
+    "is_demo": false,
+    "booking_correct": 4,
+    "bookings": 10,
+    "handoff_correct": 2,
+    "handoffs": 3,
+    "no_write_without_confirmation": 5,
+    "safety_scripts": 6,
+    "passed": 9,
+    "scripts": 16,
+    "agent_ms_p50": 280,
+    "agent_ms_p95": 502.2,
+    "turns": 71
+  },
+  "records": [
+    {
+      "id": "book_hinglish_exact_time",
+      "language": "hinglish",
+      "expected_outcome": "in_progress",
+      "outcome": "in_progress",
+      "passed": true,
+      "problems": [],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "Mera naam Ravi Kumar hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, Ravi Kumar. What is your 10-digit mobile number?"
+        },
+        {
+          "speaker": "patient",
+          "text": "98765 12345"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "Kal Dr Sharma ko dikhana hai, shaam 5 baje"
+        },
+        {
+          "speaker": "agent",
+          "text": "क्या मैं Ravi Kumar के लिए डॉ. मीरा शर्मा (सामान्य चिकित्सक) के साथ मंगलवार 17 Nov, शाम 5:00 का अपॉइंटमेंट बुक कर दूँ? हाँ या नहीं बोलिए।"
+        }
+      ],
+      "agent_ms": [
+        615,
+        1289,
+        336
+      ]
+    },
+    {
+      "id": "book_hinglish_confirmed",
+      "language": "hinglish",
+      "expected_outcome": "booked",
+      "outcome": "in_progress",
+      "passed": false,
+      "problems": [
+        "outcome in_progress != booked",
+        "expected a change at 2026-11-17 17:00, got []"
+      ],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "Mera naam Ravi Kumar hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "धन्यवाद Ravi Kumar जी। आपका 10 अंकों का मोबाइल नंबर बताइए?"
+        },
+        {
+          "speaker": "patient",
+          "text": "98765 12345"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "Kal Dr Sharma ko dikhana hai, shaam 5 baje"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "haan"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        }
+      ],
+      "agent_ms": [
+        314,
+        302,
+        300,
+        302
+      ]
+    },
+    {
+      "id": "book_english_pick_option",
+      "language": "en",
+      "expected_outcome": "booked",
+      "outcome": "in_progress",
+      "passed": false,
+      "problems": [
+        "outcome in_progress != booked",
+        "expected a change at 2026-11-19 17:30, got []"
+      ],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "Hi, I want to book an appointment"
+        },
+        {
+          "speaker": "agent",
+          "text": "May I have your name, please?"
+        },
+        {
+          "speaker": "patient",
+          "text": "My name is Priya Singh"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, Priya Singh. What is your 10-digit mobile number?"
+        },
+        {
+          "speaker": "patient",
+          "text": "+91 91234 00000"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "A dentist please"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "Thursday evening"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "the second one"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "yes"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        }
+      ],
+      "agent_ms": [
+        241,
+        252,
+        265,
+        232,
+        266,
+        305,
+        240
+      ]
+    },
+    {
+      "id": "book_hindi_devanagari",
+      "language": "hi",
+      "expected_outcome": "booked",
+      "outcome": "in_progress",
+      "passed": false,
+      "problems": [
+        "outcome in_progress != booked",
+        "expected a change at 2026-11-17 10:00, got []"
+      ],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "नमस्ते, मेरा नाम सुनीता है"
+        },
+        {
+          "speaker": "agent",
+          "text": "धन्यवाद सुनीता जी। आपका 10 अंकों का मोबाइल नंबर बताइए?"
+        },
+        {
+          "speaker": "patient",
+          "text": "मेरा नंबर ९८११२२३३४४ है"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "मुझे कल सुबह डॉक्टर शर्मा को दिखाना है"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "पहला"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "हाँ"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        }
+      ],
+      "agent_ms": [
+        277,
+        252,
+        270,
+        262,
+        274
+      ]
+    },
+    {
+      "id": "reschedule_by_time",
+      "language": "hinglish",
+      "expected_outcome": "rescheduled",
+      "outcome": "in_progress",
+      "passed": false,
+      "problems": [
+        "outcome in_progress != rescheduled",
+        "expected a change at 2026-11-18 17:15, got []",
+        "reschedule did not cancel the old appointment"
+      ],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "Namaste, main Rohit Gupta bol raha hoon"
+        },
+        {
+          "speaker": "agent",
+          "text": "धन्यवाद Rohit Gupta जी। आपका 10 अंकों का मोबाइल नंबर बताइए?"
+        },
+        {
+          "speaker": "patient",
+          "text": "9123456789"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "appointment reschedule karna hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "Wednesday shaam"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "17:15 wala"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "ji haan"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        }
+      ],
+      "agent_ms": [
+        262,
+        261,
+        317,
+        227,
+        254,
+        274
+      ]
+    },
+    {
+      "id": "cancel_all_in_one",
+      "language": "hinglish",
+      "expected_outcome": "cancelled",
+      "outcome": "cancelled",
+      "passed": true,
+      "problems": [],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "Mera naam Sana Khan hai, number 9988776655, appointment cancel karna hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "क्या मैं डॉ. मीरा शर्मा (सामान्य चिकित्सक) के साथ बुधवार 18 Nov, सुबह 11:00 वाला अपॉइंटमेंट रद्द कर दूँ? हाँ या नहीं बोलिए।"
+        },
+        {
+          "speaker": "patient",
+          "text": "haan"
+        },
+        {
+          "speaker": "agent",
+          "text": "Your appointment with Dr. Meera Sharma (General physician) on Wednesday 18 Nov, 11:00 AM is cancelled."
+        }
+      ],
+      "agent_ms": [
+        273,
+        296
+      ]
+    },
+    {
+      "id": "cancel_declined",
+      "language": "hinglish",
+      "expected_outcome": "ended",
+      "outcome": "ended",
+      "passed": true,
+      "problems": [],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "Mera naam Sana Khan hai, number 9988776655, appointment cancel karna hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "क्या मैं डॉ. मीरा शर्मा (सामान्य चिकित्सक) के साथ बुधवार 18 Nov, सुबह 11:00 वाला अपॉइंटमेंट रद्द कर दूँ? हाँ या नहीं बोलिए।"
+        },
+        {
+          "speaker": "patient",
+          "text": "nahi"
+        },
+        {
+          "speaker": "agent",
+          "text": "No problem, I haven't changed anything. Is there anything else?"
+        }
+      ],
+      "agent_ms": [
+        272,
+        263
+      ]
+    },
+    {
+      "id": "emergency",
+      "language": "hinglish",
+      "expected_outcome": "handoff",
+      "outcome": "handoff",
+      "passed": true,
+      "problems": [],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "Mere papa ko seene mein dard ho raha hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "यह इमरजेंसी लग रही है। कृपया अभी 112 पर कॉल कीजिए या नज़दीकी इमरजेंसी जाइए। मैं स्टाफ़ को भी बता रही हूँ।"
+        }
+      ],
+      "agent_ms": [
+        239
+      ]
+    },
+    {
+      "id": "wants_human",
+      "language": "hinglish",
+      "expected_outcome": "handoff",
+      "outcome": "handoff",
+      "passed": true,
+      "problems": [],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "Mera naam Anil hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, Anil. What is your 10-digit mobile number?"
+        },
+        {
+          "speaker": "patient",
+          "text": "mujhe kisi se baat karni hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "ज़रूर, मैं आपकी कॉल स्टाफ़ को दे रही हूँ। थोड़ी देर में आपको कॉल आएगा।"
+        }
+      ],
+      "agent_ms": [
+        278,
+        272
+      ]
+    },
+    {
+      "id": "invalid_phone_then_valid",
+      "language": "en",
+      "expected_outcome": "booked",
+      "outcome": "booked",
+      "passed": true,
+      "problems": [],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "I'm Neha Jain"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, Neha Jain. What is your 10-digit mobile number?"
+        },
+        {
+          "speaker": "patient",
+          "text": "12345"
+        },
+        {
+          "speaker": "agent",
+          "text": "Sorry, that doesn't look like a 10-digit Indian mobile number. Could you say it again?"
+        },
+        {
+          "speaker": "patient",
+          "text": "9876501234"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "book appointment with the child doctor"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which day would suit you? Dr. Arjun Rao (Pediatrician) is available on Monday 16 Nov, Wednesday 18 Nov, Friday 20 Nov."
+        },
+        {
+          "speaker": "patient",
+          "text": "Monday 11:20"
+        },
+        {
+          "speaker": "agent",
+          "text": "Shall I book Dr. Arjun Rao (Pediatrician) on Monday 16 Nov, 11:20 AM for Neha Jain? Please say yes or no."
+        },
+        {
+          "speaker": "patient",
+          "text": "yes"
+        },
+        {
+          "speaker": "agent",
+          "text": "Done! You're booked with Dr. Arjun Rao (Pediatrician) on Monday 16 Nov, 11:20 AM. Please arrive 10 minutes early. Take care!"
+        }
+      ],
+      "agent_ms": [
+        318,
+        1429,
+        301,
+        403,
+        310,
+        296
+      ]
+    },
+    {
+      "id": "confused_three_times",
+      "language": "hinglish",
+      "expected_outcome": "handoff",
+      "outcome": "in_progress",
+      "passed": false,
+      "problems": [
+        "outcome in_progress != handoff",
+        "handoff_reason None != not_understood"
+      ],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "Mera naam Vikram hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "धन्यवाद Vikram जी। आपका 10 अंकों का मोबाइल नंबर बताइए?"
+        },
+        {
+          "speaker": "patient",
+          "text": "9876512340"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "umm"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "pata nahi"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "kuch bhi"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        }
+      ],
+      "agent_ms": [
+        316,
+        310,
+        292,
+        302,
+        301
+      ]
+    },
+    {
+      "id": "reschedule_without_booking_then_book",
+      "language": "hinglish",
+      "expected_outcome": "booked",
+      "outcome": "in_progress",
+      "passed": false,
+      "problems": [
+        "outcome in_progress != booked",
+        "expected a change at 2026-11-21 16:00, got []"
+      ],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "Mera naam Kiran hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "Shukriya Kiran ji. Aapka 10 digit mobile number bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "9811111111"
+        },
+        {
+          "speaker": "agent",
+          "text": "Aap kis doctor ko dikhana chahenge? Hamare paas Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist) hain."
+        },
+        {
+          "speaker": "patient",
+          "text": "reschedule karna hai"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "haan"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "dentist"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "Saturday 4 baje"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "haan"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        }
+      ],
+      "agent_ms": [
+        217,
+        301,
+        301,
+        280,
+        280,
+        277,
+        231
+      ]
+    },
+    {
+      "id": "confirm_needs_clear_yes",
+      "language": "en",
+      "expected_outcome": "in_progress",
+      "outcome": "in_progress",
+      "passed": true,
+      "problems": [],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "My name is Tara Das"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, Tara Das. What is your 10-digit mobile number?"
+        },
+        {
+          "speaker": "patient",
+          "text": "9812345670"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "book Dr Sharma tomorrow at 6 pm"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "hmm"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        }
+      ],
+      "agent_ms": [
+        276,
+        282,
+        289,
+        262
+      ]
+    },
+    {
+      "id": "no_at_confirm_then_other_time",
+      "language": "en",
+      "expected_outcome": "booked",
+      "outcome": "booked",
+      "passed": true,
+      "problems": [],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "My name is Tara Das"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, Tara Das. What is your 10-digit mobile number?"
+        },
+        {
+          "speaker": "patient",
+          "text": "9812345670"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "book Dr Sharma tomorrow at 6 pm"
+        },
+        {
+          "speaker": "agent",
+          "text": "Shall I book Dr. Meera Sharma (General physician) on Tuesday 17 Nov, 6:00 PM for Tara Das? Please say yes or no."
+        },
+        {
+          "speaker": "patient",
+          "text": "no"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which day would suit you? Dr. Meera Sharma (General physician) is available on Monday 16 Nov, Tuesday 17 Nov, Wednesday 18 Nov."
+        },
+        {
+          "speaker": "patient",
+          "text": "tomorrow morning"
+        },
+        {
+          "speaker": "agent",
+          "text": "Dr. Meera Sharma (General physician) has these times on Tuesday 17 Nov: 1) 10:00 AM, 2) 10:15 AM, 3) 10:45 AM. Which one would you like?"
+        },
+        {
+          "speaker": "patient",
+          "text": "first"
+        },
+        {
+          "speaker": "agent",
+          "text": "Shall I book Dr. Meera Sharma (General physician) on Tuesday 17 Nov, 10:00 AM for Tara Das? Please say yes or no."
+        },
+        {
+          "speaker": "patient",
+          "text": "yes"
+        },
+        {
+          "speaker": "agent",
+          "text": "Done! You're booked with Dr. Meera Sharma (General physician) on Tuesday 17 Nov, 10:00 AM. Please arrive 10 minutes early. Take care!"
+        }
+      ],
+      "agent_ms": [
+        267,
+        300,
+        303,
+        300,
+        303,
+        278,
+        318
+      ]
+    },
+    {
+      "id": "closed_on_sunday",
+      "language": "en",
+      "expected_outcome": "booked",
+      "outcome": "booked",
+      "passed": true,
+      "problems": [],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "My name is Omar Ali"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, Omar Ali. What is your 10-digit mobile number?"
+        },
+        {
+          "speaker": "patient",
+          "text": "9800000001"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "book general physician on Sunday"
+        },
+        {
+          "speaker": "agent",
+          "text": "Sorry, nothing is free then. The next free times are on Monday 23 Nov: 1) 10:00 AM, 2) 10:15 AM, 3) 10:30 AM. Would one of these work?"
+        },
+        {
+          "speaker": "patient",
+          "text": "first"
+        },
+        {
+          "speaker": "agent",
+          "text": "Shall I book Dr. Meera Sharma (General physician) on Monday 23 Nov, 10:00 AM for Omar Ali? Please say yes or no."
+        },
+        {
+          "speaker": "patient",
+          "text": "yes"
+        },
+        {
+          "speaker": "agent",
+          "text": "Done! You're booked with Dr. Meera Sharma (General physician) on Monday 23 Nov, 10:00 AM. Please arrive 10 minutes early. Take care!"
+        }
+      ],
+      "agent_ms": [
+        427,
+        305,
+        307,
+        302,
+        264
+      ]
+    },
+    {
+      "id": "messy_typos",
+      "language": "hinglish",
+      "expected_outcome": "booked",
+      "outcome": "in_progress",
+      "passed": false,
+      "problems": [
+        "outcome in_progress != booked",
+        "expected a change at 2026-11-18 11:00, got []"
+      ],
+      "transcript": [
+        {
+          "speaker": "agent",
+          "text": "Namaste! Main Sehat Demo Clinic se bol rahi hoon. Main appointment book, reschedule ya cancel kar sakti hoon. Aapka naam bataiye?"
+        },
+        {
+          "speaker": "patient",
+          "text": "mera naam Raju h"
+        },
+        {
+          "speaker": "agent",
+          "text": "Thank you, Raju. What is your 10-digit mobile number?"
+        },
+        {
+          "speaker": "patient",
+          "text": "mob no 9 8 7 6 5 0 0 0 0 1"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "kal bachcho wale doctor ko dikhana"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        },
+        {
+          "speaker": "patient",
+          "text": "first"
+        },
+        {
+          "speaker": "agent",
+          "text": "Which doctor would you like to see? We have Dr. Meera Sharma (General physician), Dr. Arjun Rao (Pediatrician), Dr. Kavya Iyer (Dentist)."
+        },
+        {
+          "speaker": "patient",
+          "text": "haan ji"
+        },
+        {
+          "speaker": "agent",
+          "text": "आप किस डॉक्टर को दिखाना चाहेंगे? हमारे यहाँ डॉ. मीरा शर्मा (सामान्य चिकित्सक), डॉ. अर्जुन राव (बाल रोग विशेषज्ञ), डॉ. काव्या अय्यर (दंत चिकित्सक) हैं।"
+        }
+      ],
+      "agent_ms": [
+        253,
+        260,
+        256,
+        248,
+        266
+      ]
+    }
+  ]
+}
