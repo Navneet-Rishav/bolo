@@ -7,6 +7,7 @@ import type { Session, User } from './lib/types';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { TalkPage } from './pages/TalkPage';
+import { WakeBanner } from './components/WakeBanner';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +43,7 @@ export function Providers({ children, initialUser = null }: { children: React.Re
 export default function App() {
   return (
     <Providers initialUser={loadUser()}>
+      <WakeBanner />
       <BrowserRouter>
         <AuthContext.Consumer>
           {({ user }) => (

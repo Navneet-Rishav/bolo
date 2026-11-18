@@ -11,7 +11,7 @@
 
 ### At a glance
 
-- **Tests:** 57 automated tests: 54 backend tests (pytest, real Postgres), including **16 scripted conversations**, and 3 frontend tests. Run them with `cd backend && pytest` and `cd frontend && npm test`.
+- **Tests:** 58 automated tests: 54 backend tests (pytest, real Postgres), including **16 scripted conversations**, and 4 frontend tests. Run them with `cd backend && pytest` and `cd frontend && npm test`.
 - **Evals:** the 16 scripted conversations (English, Hinglish, Devanagari, typos, emergencies, handoffs) pass on the offline demo provider. They test the state machine and rules, not a model; **no real-model run yet.** See [Tests](#tests).
 
 ### Key design decisions
@@ -54,7 +54,7 @@ All decisions and alternatives: [docs/DECISIONS.md](docs/DECISIONS.md).
 ## Tests
 
 - **54 backend tests** (pytest, real Postgres): phone parsing and masking, slot generation (schedule, lead time, window, time zones, booked slots), **16 scripted conversations** (English, Hinglish, Devanagari, typos, spaced digits, reschedule, cancel, decline, invalid phone, closed Sunday, emergency, human request, confusion), the **double-booking race**, clinic isolation, rate and length limits, voice routes with a fake provider, and the Sarvam client against mocked HTTP.
-- **3 frontend tests** plus typecheck, lint and build; a Playwright end-to-end run (widget booking → calendar → transcript) produced the screenshots.
+- **4 frontend tests** plus typecheck, lint and build; a Playwright end-to-end run (widget booking → calendar → transcript) produced the screenshots.
 - The scripted conversations pass with the offline demo provider, whose keyword rules were written alongside them, so **they test the state machine and rules, not a model**. `python -m evals.run` runs the same scripts against the real model (paid API calls; not run yet).
 
 ## Architecture
