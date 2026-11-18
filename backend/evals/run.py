@@ -17,6 +17,23 @@ from evals.runner import run_script
 
 
 def main() -> int:
+    import argparse
+    import json
+
+    from app.config import get_settings
+
+    ap = argparse.ArgumentParser(description="Run the scripted conversations against the configured provider.")
+    ap.add_argument("--json", metavar="PATH", help="also write the summary and every transcript to PATH")
+    ap.add_argument("--allow-remote-db", action="store_true", help="allow a hosted database (Neon/Render); off by default")
+    args = ap.parse_args()
+    url = get_settings().database_url
+    if not args.allow_remote_db and ("neon.tech" in url or "render.com" in url):
+        # Each script creates a demo clinic and leaves it behind, so never point this at production.
+        print(
+            "Refusing to run the eval against a hosted database. Point DATABASE_URL at a local Postgres, or pass --allow-remote-db."
+        )
+        return 2
+
     provider = get_provider()
     print(f"provider: {provider.name}/{provider.model}{'  (demo: NOT a model evaluation)' if provider.is_demo else ''}")
     results = []
@@ -35,6 +52,37 @@ def main() -> int:
     if lat:
         q = statistics.quantiles(lat, n=20) if len(lat) > 1 else [lat[0]] * 19
         print(f"agent latency per turn: p50 {statistics.median(lat):.0f} ms, p95 {q[18]:.0f} ms ({len(lat)} turns)")
+    if args.json:
+        summary = {
+            "provider": f"{provider.name}/{provider.model}",
+            "is_demo": provider.is_demo,
+            "booking_correct": sum(r.passed for _, r in bookings),
+            "bookings": len(bookings),
+            "handoff_correct": sum(r.passed for _, r in handoffs),
+            "handoffs": len(handoffs),
+            "no_write_without_confirmation": sum(r.passed for _, r in safety),
+            "safety_scripts": len(safety),
+            "passed": sum(r.passed for _, r in results),
+            "scripts": len(results),
+            "agent_ms_p50": statistics.median(lat) if lat else None,
+            "agent_ms_p95": (statistics.quantiles(lat, n=20)[18] if len(lat) > 1 else (lat[0] if lat else None)),
+            "turns": len(lat),
+        }
+        records = [
+            {
+                "id": s.id,
+                "language": s.language,
+                "expected_outcome": s.outcome,
+                "outcome": r.outcome,
+                "passed": r.passed,
+                "problems": r.problems,
+                "transcript": [{"speaker": who, "text": text} for who, text in r.transcript],
+                "agent_ms": r.agent_ms,
+            }
+            for s, r in results
+        ]
+        with open(args.json, "w", encoding="utf-8") as f:
+            json.dump({"summary": summary, "records": records}, f, ensure_ascii=False, indent=2)
     return 0 if all(r.passed for _, r in results) else 1
 
 
